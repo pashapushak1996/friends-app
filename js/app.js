@@ -78,6 +78,9 @@ const sortUsers = (users) => {
 };
 
 const filterButton = document.querySelector('#filter-button');
+const resetButton = document.querySelector('#reset-button');
+const genderRadio = document.querySelector('#all-genders');
+const nameRadio = document.querySelector('#alphabetical');
 const minAgeInput = document.querySelector('#min-age');
 const maxAgeInput = document.querySelector('#max-age');
 
@@ -104,15 +107,22 @@ const filterUsers = (users, filterBy) => {
 
 function filterBtnOnClick() {
     content.innerHTML = '';
-    const filteredUsersByAge = filterUsers(initialUsers, 'age');
-    const filteredUsersByGender = filterUsers(filteredUsersByAge, 'gender');
+    const filteredUsersByAge = filterUsers(initialUsers, asidePanelOptions.AGE);
+    const filteredUsersByGender = filterUsers(filteredUsersByAge, asidePanelOptions.GENDER);
     const sortedUsers = sortUsers(filteredUsersByGender);
 
     renderUsersList(sortedUsers);
 }
 
+function resetBtnOnClick() {
+    content.innerHTML = '';
+    genderRadio.checked = true;
+    nameRadio.checked = true;
+}
+
 
 filterButton.addEventListener('click', filterBtnOnClick);
+resetButton.addEventListener('click', resetBtnOnClick);
 
 const searchByName = ({ target: { value } }) => {
     const normalizedValue = value.trim().toLowerCase();

@@ -33,15 +33,15 @@
           <span class="aside__title">Sort by:</span>
           <div class="aside__item">
             <span>Age:</span>
-            <div id="sort-default-age" class="aside__icon">
+            <div  class="aside__icon">
               <input type="radio" name="sort-options" value="age" checked>
               <img src="./icons/default-age.svg" alt="">
             </div>
-            <div id="sort-elder" class="aside__icon">
+            <div  class="aside__icon">
               <input type="radio" name="sort-options" value="age-asc">
               <img src="./icons/younger.svg" alt="">
             </div>
-            <div id="sort-younger" class="aside__icon">
+            <div class="aside__icon">
               <input type="radio" name="sort-options" value="age-desc">
               <img src="./icons/elder.svg" alt="">
             </div>
@@ -49,7 +49,7 @@
           <div class="aside__item">
             <span>Name:</span>
             <div class="aside__icon">
-              <input type="radio" name="sort-options" value="name" checked>
+              <input id="alphabetical" type="radio" name="sort-options" value="name" checked>
               <img src="./icons/alphabetical-sorting-R.svg" alt="">
             </div>
             <div class="aside__icon">
@@ -64,7 +64,7 @@
         </div>
         <div class="aside__panel">
           <span class="aside__title">Filter by:</span>
-          <div id="filter-age" class="aside__item">
+          <div class="aside__item">
             <span>Age:</span>
             <label for="min-age">min:</label>
             <input id="min-age" name="max-age" type="text">
@@ -74,7 +74,7 @@
           <div class="aside__item">
             <span>Gender:</span>
             <div class="aside__icon">
-              <input type="radio" name="genders" value="all-genders" checked>
+              <input id="all-genders" type="radio" name="genders" value="all-genders" checked>
               <img src="./icons/all-genders.svg" alt="default age">
             </div>
             <div class="aside__icon">
