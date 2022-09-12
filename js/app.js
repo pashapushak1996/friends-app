@@ -118,6 +118,8 @@ function resetBtnOnClick() {
     content.innerHTML = '';
     genderRadio.checked = true;
     nameRadio.checked = true;
+
+    renderUsersList(initialUsers);
 }
 
 
