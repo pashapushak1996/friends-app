@@ -30,12 +30,36 @@ const asidePanelOptions = {
 
 const initialUsers = [];
 
+function showError() {
+    const errorMessage = document.createElement('span');
+    errorMessage.innerText = 'Oops, something went wrong. Please reload';
+    errorMessage.className = 'error-message';
+    content.append(errorMessage);
+}
+
+function show_loader() {
+    const img = document.createElement("img");
+    img.src = './icons/loader.svg';
+    img.className = 'loader';
+    content.appendChild(img);
+}
+
+function hideLoader() {
+    const loader = document.querySelector('.loader');
+
+    loader.classList.add('none');
+}
+
 
 async function getUsers() {
     try {
+        show_loader();
+
         const data = await fetch(`${ baseUrl }?results=20`,);
 
         const { results: users } = await data.json();
+
+        hideLoader();
 
         return users.map((user) => ({
                 fullName: user.name.first + ' ' + user.name.last,
@@ -47,8 +71,11 @@ async function getUsers() {
                 phone: user.phone
             })
         );
-    } catch ({ message }) {
-        console.log(message);
+    } catch (e) {
+        setTimeout(() => {
+            hideLoader();
+            showError();
+        }, 3000);
     }
 
 }
