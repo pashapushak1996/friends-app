@@ -18,6 +18,9 @@
         <img src="./icons/logo.png" alt="">
         <span>Friends App</span>
       </div>
+      <div id="header-button" class="header__button">
+        <img src="./icons/filters-icon.png" alt="filters">
+      </div>
       <div class="header__search">
         <input type="text" placeholder="Find person...">
         <div class="header__search-icon">
@@ -29,66 +32,74 @@
   <main class="main">
     <div class="container">
       <aside class="aside">
-        <div class="aside__panel">
-          <span class="aside__title">Sort by:</span>
-          <div class="aside__item">
-            <span>Age:</span>
-            <div  class="aside__icon">
-              <input type="radio" name="sort-options" value="age" checked>
-              <img src="./icons/default-age.svg" alt="">
+        <div class="aside__inner">
+          <div id="aside-search" class="aside__panel none">
+            <span class="aside__title">Search:</span>
+            <input class="aside__search" type="text" placeholder="Find person">
+          </div>
+          <div class="aside__panel">
+            <span class="aside__title">Sort by:</span>
+            <div class="aside__item">
+              <span>Age:</span>
+              <div class="aside__icon">
+                <input type="radio" name="sort-options" value="age" checked>
+                <img src="./icons/default-age.svg" alt="">
+              </div>
+              <div class="aside__icon">
+                <input type="radio" name="sort-options" value="age-asc">
+                <img src="./icons/younger.svg" alt="">
+              </div>
+              <div class="aside__icon">
+                <input type="radio" name="sort-options" value="age-desc">
+                <img src="./icons/elder.svg" alt="">
+              </div>
             </div>
-            <div  class="aside__icon">
-              <input type="radio" name="sort-options" value="age-asc">
-              <img src="./icons/younger.svg" alt="">
-            </div>
-            <div class="aside__icon">
-              <input type="radio" name="sort-options" value="age-desc">
-              <img src="./icons/elder.svg" alt="">
+            <div class="aside__item">
+              <span>Name:</span>
+              <div class="aside__icon">
+                <input id="alphabetical" type="radio" name="sort-options" value="name" checked>
+                <img src="./icons/alphabetical-sorting-R.svg" alt="">
+              </div>
+              <div class="aside__icon">
+                <input type="radio" name="sort-options" value="name-desc">
+                <img src="icons/alphabetical-sorting_Z-A.svg" alt="">
+              </div>
+              <div class="aside__icon">
+                <input type="radio" name="sort-options" value="name-asc">
+                <img src="icons/alphabetical-sorting_A-Z.svg" alt="">
+              </div>
             </div>
           </div>
-          <div class="aside__item">
-            <span>Name:</span>
-            <div class="aside__icon">
-              <input id="alphabetical" type="radio" name="sort-options" value="name" checked>
-              <img src="./icons/alphabetical-sorting-R.svg" alt="">
+          <div class="aside__panel">
+            <span class="aside__title">Filter by:</span>
+            <div class="aside__item">
+              <span>Age:</span>
+              <div id="slider">
+              </div>
+              <label for="min-age">min:</label>
+              <input id="min-age" name="max-age" type="text">
+              <label for="max-age">max:</label>
+              <input id="max-age" type="text">
             </div>
-            <div class="aside__icon">
-              <input type="radio" name="sort-options" value="name-desc">
-              <img src="icons/alphabetical-sorting_Z-A.svg" alt="">
-            </div>
-            <div class="aside__icon">
-              <input type="radio" name="sort-options" value="name-asc">
-              <img src="icons/alphabetical-sorting_A-Z.svg" alt="">
+            <div class="aside__item">
+              <span>Gender:</span>
+              <div class="aside__icon">
+                <input id="all-genders" type="radio" name="genders" value="all-genders" checked>
+                <img src="./icons/all-genders.svg" alt="default age">
+              </div>
+              <div class="aside__icon">
+                <input type="radio" name="genders" value="female">
+                <img src="./icons/female.svg" alt="default age">
+              </div>
+              <div class="aside__icon">
+                <input type="radio" name="genders" value="male">
+                <img src="./icons/male.svg" alt="default age">
+              </div>
             </div>
           </div>
+          <div id="filter-button" class="aside__button">Filter</div>
+          <div id="reset-button" class="aside__button">Reset</div>
         </div>
-        <div class="aside__panel">
-          <span class="aside__title">Filter by:</span>
-          <div class="aside__item">
-            <span>Age:</span>
-            <label for="min-age">min:</label>
-            <input id="min-age" name="max-age" type="text">
-            <label for="max-age">max:</label>
-            <input id="max-age" type="text">
-          </div>
-          <div class="aside__item">
-            <span>Gender:</span>
-            <div class="aside__icon">
-              <input id="all-genders" type="radio" name="genders" value="all-genders" checked>
-              <img src="./icons/all-genders.svg" alt="default age">
-            </div>
-            <div class="aside__icon">
-              <input type="radio" name="genders" value="female">
-              <img src="./icons/female.svg" alt="default age">
-            </div>
-            <div class="aside__icon">
-              <input type="radio" name="genders" value="male">
-              <img src="./icons/male.svg" alt="default age">
-            </div>
-          </div>
-        </div>
-        <div id="filter-button" class="aside__button">Filter</div>
-        <div id="reset-button" class="aside__button">Reset</div>
       </aside>
       <div class="content">
       </div>

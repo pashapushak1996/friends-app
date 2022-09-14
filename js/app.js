@@ -1,9 +1,21 @@
-//Elements constants
 const content = document.querySelector('.content');
 const input = document.querySelector('.header__search input');
 const searchButton = document.querySelector('.header__search-icon');
 const searchInput = document.querySelector('.header__search input');
-const radioButtons = document.getElementsByTagName('input');
+const asidePanel = document.querySelector('.aside');
+const asideSearch = document.querySelector('#aside-search');
+const filterButton = document.querySelector('#filter-button');
+const headerButton = document.querySelector('#header-button');
+const resetButton = document.querySelector('#reset-button');
+const genderRadio = document.querySelector('#all-genders');
+const nameRadio = document.querySelector('#alphabetical');
+const minAgeInput = document.querySelector('#min-age');
+const maxAgeInput = document.querySelector('#max-age');
+
+headerButton.addEventListener('click', () => {
+    asidePanel.classList.toggle('active');
+    asideSearch.classList.toggle('none');
+});
 
 //Constants
 const baseUrl = 'https://randomuser.me/api/';
@@ -21,7 +33,7 @@ const initialUsers = [];
 
 async function getUsers() {
     try {
-        const data = await fetch(`${ baseUrl }?results=20`);
+        const data = await fetch(`${ baseUrl }?results=20`,);
 
         const { results: users } = await data.json();
 
@@ -77,13 +89,6 @@ const sortUsers = (users) => {
     }
 };
 
-const filterButton = document.querySelector('#filter-button');
-const resetButton = document.querySelector('#reset-button');
-const genderRadio = document.querySelector('#all-genders');
-const nameRadio = document.querySelector('#alphabetical');
-const minAgeInput = document.querySelector('#min-age');
-const maxAgeInput = document.querySelector('#max-age');
-
 const filterUsers = (users, filterBy) => {
     switch (filterBy) {
         case 'age': {
@@ -94,8 +99,7 @@ const filterUsers = (users, filterBy) => {
         }
 
         case 'gender': {
-            const genderRadio = document.querySelector('input[name="genders"]:checked');
-            const gender = genderRadio.value;
+            const gender = document.querySelector('input[name="genders"]:checked').value;
 
             return gender !== 'all-genders' ? users.filter((user) => user.gender === gender) : users;
         }
@@ -107,6 +111,7 @@ const filterUsers = (users, filterBy) => {
 
 function filterBtnOnClick() {
     content.innerHTML = '';
+
     const filteredUsersByAge = filterUsers(initialUsers, asidePanelOptions.AGE);
     const filteredUsersByGender = filterUsers(filteredUsersByAge, asidePanelOptions.GENDER);
     const sortedUsers = sortUsers(filteredUsersByGender);
@@ -148,8 +153,6 @@ const searchByName = ({ target: { value } }) => {
     });
 };
 
-searchInput.addEventListener('input', searchByName);
-
 const renderUsersList = (users) => {
     const usersGrid = users.map((user) => createUserCard(user));
 
@@ -183,7 +186,7 @@ const createUserCard = (user) => {
                                 <span>${ country }</span>
                               </div>
                           </div>
-                          <div data-gender="${ gender.toLowerCase() }" class="user-card__gender">
+                          <div class="user-card__gender">
                            <span>${ gender.toUpperCase() }</span>
                           </div>
 `;
@@ -204,6 +207,8 @@ const setUsers = async () => {
 };
 
 setUsers();
+
+searchInput.addEventListener('input', searchByName);
 
 searchButton.addEventListener('click', () => {
     searchInput.classList.toggle('active');
