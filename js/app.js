@@ -1,9 +1,9 @@
 const content = document.querySelector('.content');
-const input = document.querySelector('.header__search input');
 const searchButton = document.querySelector('.header__search-icon');
 const searchInput = document.querySelector('.header__search input');
 const asidePanel = document.querySelector('.aside');
-const asideSearch = document.querySelector('#aside-search');
+const asideSearchBlock = document.querySelector('#aside-search');
+const filterSearch = document.querySelector('#filter-search');
 const filterButton = document.querySelector('#filter-button');
 const headerButton = document.querySelector('#header-button');
 const resetButton = document.querySelector('#reset-button');
@@ -11,11 +11,6 @@ const genderRadio = document.querySelector('#all-genders');
 const nameRadio = document.querySelector('#alphabetical');
 const minAgeInput = document.querySelector('#min-age');
 const maxAgeInput = document.querySelector('#max-age');
-
-headerButton.addEventListener('click', () => {
-    asidePanel.classList.toggle('active');
-    asideSearch.classList.toggle('none');
-});
 
 //Constants
 const baseUrl = 'https://randomuser.me/api/';
@@ -29,6 +24,11 @@ const asidePanelOptions = {
 };
 
 const initialUsers = [];
+
+function toggleFilterPanel() {
+    asidePanel.classList.toggle('active');
+    asideSearchBlock.classList.toggle('none');
+}
 
 function showError() {
     const errorMessage = document.createElement('span');
@@ -144,6 +144,8 @@ function filterBtnOnClick() {
     const sortedUsers = sortUsers(filteredUsersByGender);
 
     renderUsersList(sortedUsers);
+
+    toggleFilterPanel();
 }
 
 function resetBtnOnClick() {
@@ -152,11 +154,9 @@ function resetBtnOnClick() {
     nameRadio.checked = true;
 
     renderUsersList(initialUsers);
+
+    toggleFilterPanel();
 }
-
-
-filterButton.addEventListener('click', filterBtnOnClick);
-resetButton.addEventListener('click', resetBtnOnClick);
 
 const searchByName = ({ target: { value } }) => {
     const normalizedValue = value.trim().toLowerCase();
@@ -180,11 +180,6 @@ const searchByName = ({ target: { value } }) => {
     });
 };
 
-const renderUsersList = (users) => {
-    const usersGrid = users.map((user) => createUserCard(user));
-
-    content.append(...usersGrid);
-};
 
 const createUserCard = (user) => {
     const { fullName, age, email, phone, country, picture, gender } = user;
@@ -221,6 +216,12 @@ const createUserCard = (user) => {
     return userCard;
 };
 
+const renderUsersList = (users) => {
+    const usersGrid = users.map((user) => createUserCard(user));
+
+    content.append(...usersGrid);
+};
+
 const setUsers = async () => {
     try {
         const users = await getUsers();
@@ -235,9 +236,17 @@ const setUsers = async () => {
 
 setUsers();
 
+
+filterButton.addEventListener('click', filterBtnOnClick);
+resetButton.addEventListener('click', resetBtnOnClick);
+
+filterSearch.addEventListener('input', searchByName);
+
 searchInput.addEventListener('input', searchByName);
 
 searchButton.addEventListener('click', () => {
     searchInput.classList.toggle('active');
 });
+
+headerButton.addEventListener('click', toggleFilterPanel);
 
