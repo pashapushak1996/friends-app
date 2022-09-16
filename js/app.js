@@ -145,6 +145,12 @@ function filterBtnOnClick() {
 
     renderUsersList(sortedUsers);
 
+    searchByName({
+        target: {
+            value: filterSearch.value
+        }
+    });
+
     toggleFilterPanel();
 }
 
@@ -152,6 +158,7 @@ function resetBtnOnClick() {
     content.innerHTML = '';
     genderRadio.checked = true;
     nameRadio.checked = true;
+    filterSearch.value = '';
 
     renderUsersList(initialUsers);
 
