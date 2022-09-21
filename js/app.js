@@ -3,7 +3,7 @@ const searchButton = document.querySelector('.header__search-icon');
 const searchInput = document.querySelector('.header__search input');
 const asidePanel = document.querySelector('.aside');
 const filterSearch = document.querySelector('#filter-search');
-const filterButton = document.querySelector('#filter-button');
+const applyButton = document.querySelector('#apply-button');
 const headerButton = document.querySelector('#header-button');
 const resetButton = document.querySelector('#reset-button');
 const genderRadio = document.querySelector('#all-genders');
@@ -41,6 +41,26 @@ function handleErrors(response) {
     return response;
 }
 
+function showLoader() {
+    const img = document.createElement("img");
+    img.src = './icons/loader.svg';
+    img.className = 'loader';
+    content.appendChild(img);
+}
+
+function hideLoader() {
+    const loader = document.querySelector('.loader');
+
+    loader.classList.add('none');
+}
+
+function showError() {
+    const errorMessage = document.createElement('span');
+    errorMessage.innerText = 'Oops, something went wrong. Please reload';
+    errorMessage.className = 'error-message';
+    content.append(errorMessage);
+}
+
 async function getUsers() {
     const data = await fetch(baseUrl);
 
@@ -60,7 +80,7 @@ const setUsers = (users) => {
 
 async function init() {
     try {
-        show_loader();
+        showLoader();
 
         const users = await getUsers();
 
@@ -69,7 +89,6 @@ async function init() {
         hideLoader();
 
         renderUsersList(initialUsers);
-
     } catch (e) {
         hideLoader();
         showError();
@@ -79,27 +98,6 @@ async function init() {
 function toggleFilterPanel() {
     asidePanel.classList.toggle('active');
 }
-
-function showError() {
-    const errorMessage = document.createElement('span');
-    errorMessage.innerText = 'Oops, something went wrong. Please reload';
-    errorMessage.className = 'error-message';
-    content.append(errorMessage);
-}
-
-function show_loader() {
-    const img = document.createElement("img");
-    img.src = './icons/loader.svg';
-    img.className = 'loader';
-    content.appendChild(img);
-}
-
-function hideLoader() {
-    const loader = document.querySelector('.loader');
-
-    loader.classList.add('none');
-}
-
 
 const compareAge = (userOne, userTwo) => {
     return userOne.age - userTwo.age
@@ -154,7 +152,9 @@ const filterUsers = (users, filterBy) => {
         case 'gender': {
             const gender = document.querySelector('input[name="genders"]:checked').value;
 
-            return gender !== 'all-genders' ? users.filter((user) => user.gender === gender) : users;
+            return gender !== 'all-genders'
+                ? users.filter((user) => user.gender === gender)
+                : users;
         }
         default: {
             break;
@@ -162,7 +162,7 @@ const filterUsers = (users, filterBy) => {
     }
 }
 
-function filterBtnOnClick() {
+function applyOnClick() {
     content.innerHTML = '';
 
     const filteredUsersByAge = filterUsers(initialUsers, asidePanelOptions.AGE);
@@ -180,11 +180,13 @@ function filterBtnOnClick() {
     toggleFilterPanel();
 }
 
-function resetBtnOnClick() {
+function resetOnClick() {
     content.innerHTML = '';
     genderRadio.checked = true;
     nameRadio.checked = true;
     filterSearch.value = '';
+    maxAgeInput.value = '';
+    minAgeInput.value = '';
 
     renderUsersList(initialUsers);
 
@@ -255,8 +257,8 @@ const renderUsersList = (users) => {
     content.append(...usersGrid);
 };
 
-filterButton.addEventListener('click', filterBtnOnClick);
-resetButton.addEventListener('click', resetBtnOnClick);
+applyButton.addEventListener('click', applyOnClick);
+resetButton.addEventListener('click', resetOnClick);
 
 filterSearch.addEventListener('input', searchByName);
 
