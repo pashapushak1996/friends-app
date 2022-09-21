@@ -123,12 +123,12 @@ const sortUsers = (users) => {
     }
 
     switch (sortBy) {
-        case 'age': {
+        case asidePanelOptions.AGE: {
             const sortedUsers = users.sort(compareAge);
 
             return orderBy === asidePanelOptions.ASC ? sortedUsers : sortedUsers.reverse();
         }
-        case 'name': {
+        case asidePanelOptions.NAME: {
             const sortedUsers = users.sort(compareName);
 
             return orderBy === asidePanelOptions.ASC ? sortedUsers : sortedUsers.reverse();
@@ -142,14 +142,14 @@ const sortUsers = (users) => {
 
 const filterUsers = (users, filterBy) => {
     switch (filterBy) {
-        case 'age': {
+        case asidePanelOptions.AGE: {
             const minAge = minAgeInput.value || 0;
             const maxAge = maxAgeInput.value || 200;
 
             return users.filter((user) => user.age >= Number(minAge) && user.age <= Number(maxAge));
         }
 
-        case 'gender': {
+        case asidePanelOptions.GENDER: {
             const gender = document.querySelector('input[name="genders"]:checked').value;
 
             return gender !== 'all-genders'
@@ -173,7 +173,7 @@ function applyOnClick() {
 
     searchByName({
         target: {
-            value: filterSearch.value
+            value: filterSearch.value || searchInput.value
         }
     });
 
@@ -185,6 +185,7 @@ function resetOnClick() {
     genderRadio.checked = true;
     nameRadio.checked = true;
     filterSearch.value = '';
+    searchInput.value = '';
     maxAgeInput.value = '';
     minAgeInput.value = '';
 
