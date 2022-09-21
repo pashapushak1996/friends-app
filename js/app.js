@@ -115,8 +115,8 @@ const compareName = (userOne, userTwo) => {
 const sortUsers = (users) => {
     const sortingOption = document.querySelector('input[name=sort-options]:checked').value;
 
-    const sortBy = sortingOption.split('-')[0];
-    const orderBy = sortingOption.split('-')[1];
+    const sortBy = sortingOption.split('-').shift();
+    const orderBy = sortingOption.split('-').pop();
 
     if (!orderBy) {
         return users;
@@ -140,33 +140,26 @@ const sortUsers = (users) => {
     }
 };
 
-const filterUsers = (users, filterBy) => {
-    switch (filterBy) {
-        case asidePanelOptions.AGE: {
-            const minAge = minAgeInput.value || 0;
-            const maxAge = maxAgeInput.value || 200;
+const filterByGender = (users) => {
+    const gender = document.querySelector('input[name="genders"]:checked').value;
 
-            return users.filter((user) => user.age >= Number(minAge) && user.age <= Number(maxAge));
-        }
+    return gender !== 'all-genders'
+        ? users.filter((user) => user.gender === gender)
+        : users;
+}
 
-        case asidePanelOptions.GENDER: {
-            const gender = document.querySelector('input[name="genders"]:checked').value;
+const filterByAge = (users) => {
+    const minAge = minAgeInput.value || 0;
+    const maxAge = maxAgeInput.value || 200;
 
-            return gender !== 'all-genders'
-                ? users.filter((user) => user.gender === gender)
-                : users;
-        }
-        default: {
-            break;
-        }
-    }
+    return users.filter((user) => user.age >= Number(minAge) && user.age <= Number(maxAge));
 }
 
 function applyOnClick() {
     content.innerHTML = '';
 
-    const filteredUsersByAge = filterUsers(initialUsers, asidePanelOptions.AGE);
-    const filteredUsersByGender = filterUsers(filteredUsersByAge, asidePanelOptions.GENDER);
+    const filteredUsersByAge = filterByAge(initialUsers);
+    const filteredUsersByGender = filterByGender(filteredUsersByAge);
     const sortedUsers = sortUsers(filteredUsersByGender);
 
     renderUsersList(sortedUsers);
@@ -230,7 +223,7 @@ const createUserCard = (user) => {
                                 <img src="${ picture }" alt="user-photo">
                              </div>
                              <div class="user-card__name">${ fullName }</div>
-                             <div data-age="${ age }" class="user-card__age">I have ${ age } years old</div>
+                             <div data-age="${ age }" class="user-card__age">I am ${ age } years old</div>
                              <div class="user-card__email">
                                 <img class="user-card__icon" src="./icons/email.png" alt="">
                                 <span>${ email }</span>
