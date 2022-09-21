@@ -2,7 +2,6 @@ const content = document.querySelector('.content');
 const searchButton = document.querySelector('.header__search-icon');
 const searchInput = document.querySelector('.header__search input');
 const asidePanel = document.querySelector('.aside');
-const asideSearchBlock = document.querySelector('#aside-search');
 const filterSearch = document.querySelector('#filter-search');
 const filterButton = document.querySelector('#filter-button');
 const headerButton = document.querySelector('#header-button');
@@ -27,7 +26,6 @@ const initialUsers = [];
 
 function toggleFilterPanel() {
     asidePanel.classList.toggle('active');
-    asideSearchBlock.classList.toggle('none');
 }
 
 function showError() {
@@ -77,7 +75,19 @@ async function getUsers() {
             showError();
         }, 3000);
     }
+}
 
+const compareAge = (userOne, userTwo) => {
+    return userOne.age - userTwo.age
+};
+
+const compareName = (userOne, userTwo) => {
+    if (userOne.fullName.toLowerCase() > userTwo.fullName.toLowerCase()) {
+        return -1;
+    }
+    if (userOne.fullName.toLowerCase() < userTwo.fullName.toLowerCase()) {
+        return 1;
+    }
 }
 
 const sortUsers = (users) => {
@@ -92,20 +102,12 @@ const sortUsers = (users) => {
 
     switch (sortBy) {
         case 'age': {
-            const sortedUsers = users.sort((userOne, userTwo) => userOne.age - userTwo.age);
+            const sortedUsers = users.sort(compareAge);
 
             return orderBy === asidePanelOptions.ASC ? sortedUsers : sortedUsers.reverse();
         }
         case 'name': {
-            const sortedUsers = users.sort((userOne, userTwo) => {
-
-                if (userOne.fullName.toLowerCase() > userTwo.fullName.toLowerCase()) {
-                    return -1;
-                }
-                if (userOne.fullName.toLowerCase() < userTwo.fullName.toLowerCase()) {
-                    return 1;
-                }
-            });
+            const sortedUsers = users.sort(compareName);
 
             return orderBy === asidePanelOptions.ASC ? sortedUsers : sortedUsers.reverse();
         }

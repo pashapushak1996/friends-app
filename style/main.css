@@ -45,6 +45,10 @@ body {
     width: 35rem;
 }
 
+#aside-search {
+    display: none;
+}
+
 .aside__search {
     width: 100%;
     padding: 0.8rem;
@@ -378,6 +382,10 @@ input[type=radio]:checked + img {
         background-color: #12232E;
     }
 
+    #aside-search {
+        display: block;
+    }
+
     .aside.active {
         left: 0;
     }
@@ -409,6 +417,10 @@ input[type=radio]:checked + img {
         background-color: #12232E;
     }
 
+    #aside-search {
+        display: block;
+    }
+
     .aside.active {
         left: 0;
     }
@@ -436,6 +448,10 @@ input[type=radio]:checked + img {
     .aside__inner {
         padding: 1rem;
         background-color: #12232E;
+    }
+
+    #aside-search {
+        display: block;
     }
 
     .aside.active {
