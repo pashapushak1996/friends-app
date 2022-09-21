@@ -42,25 +42,38 @@ function handleErrors(response) {
 }
 
 async function getUsers() {
-    try {
-        const data = await fetch(baseUrl);
+    const data = await fetch(baseUrl);
 
-        handleErrors(data);
+    handleErrors(data);
 
-        const { results: users } = await data.json();
+    const { results: users } = await data.json();
 
-        return users.map((user) => normalizeUserObject(user));
-    } catch (e) {
-        setTimeout(() => {
-            hideLoader();
-            showError();
-        }, 3000);
-    }
+    return users;
 }
 
-function init() {
-    show_loader();
-    hideLoader();
+const setUsers = (users) => {
+    const normalizedUsers = users.map((user) => normalizeUserObject(user));
+
+    initialUsers.push(...normalizedUsers);
+};
+
+
+async function init() {
+    try {
+        show_loader();
+
+        const users = await getUsers();
+
+        setUsers(users);
+
+        hideLoader();
+
+        renderUsersList(initialUsers);
+
+    } catch (e) {
+        hideLoader();
+        showError();
+    }
 }
 
 function toggleFilterPanel() {
@@ -242,21 +255,6 @@ const renderUsersList = (users) => {
     content.append(...usersGrid);
 };
 
-const setUsers = async () => {
-    try {
-        const users = await getUsers();
-
-        initialUsers.push(...users);
-
-        renderUsersList(initialUsers);
-    } catch ({ message }) {
-        console.log(message);
-    }
-};
-
-setUsers();
-
-
 filterButton.addEventListener('click', filterBtnOnClick);
 resetButton.addEventListener('click', resetBtnOnClick);
 
@@ -269,4 +267,6 @@ searchButton.addEventListener('click', () => {
 });
 
 headerButton.addEventListener('click', toggleFilterPanel);
+
+init();
 
