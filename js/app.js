@@ -12,7 +12,7 @@ const minAgeInput = document.querySelector('#min-age');
 const maxAgeInput = document.querySelector('#max-age');
 
 //Constants
-const baseUrl = 'https://randomuser.me/api/';
+const baseUrl = 'https://randomuser.me/api/?results=20';
 
 const asidePanelOptions = {
     AGE: 'age',
@@ -23,6 +23,45 @@ const asidePanelOptions = {
 };
 
 const initialUsers = [];
+
+const normalizeUserObject = (user) => ({
+    fullName: user.name.first + ' ' + user.name.last,
+    age: user.dob.age,
+    gender: user.gender,
+    email: user.email,
+    picture: user.picture.large,
+    country: user.location.country,
+    phone: user.phone
+});
+
+function handleErrors(response) {
+    if (!response.ok) {
+        throw Error(response.statusText);
+    }
+    return response;
+}
+
+async function getUsers() {
+    try {
+        const data = await fetch(baseUrl);
+
+        handleErrors(data);
+
+        const { results: users } = await data.json();
+
+        return users.map((user) => normalizeUserObject(user));
+    } catch (e) {
+        setTimeout(() => {
+            hideLoader();
+            showError();
+        }, 3000);
+    }
+}
+
+function init() {
+    show_loader();
+    hideLoader();
+}
 
 function toggleFilterPanel() {
     asidePanel.classList.toggle('active');
@@ -48,34 +87,6 @@ function hideLoader() {
     loader.classList.add('none');
 }
 
-
-async function getUsers() {
-    try {
-        show_loader();
-
-        const data = await fetch(`${ baseUrl }?results=20`,);
-
-        const { results: users } = await data.json();
-
-        hideLoader();
-
-        return users.map((user) => ({
-                fullName: user.name.first + ' ' + user.name.last,
-                age: user.dob.age,
-                gender: user.gender,
-                email: user.email,
-                picture: user.picture.large,
-                country: user.location.country,
-                phone: user.phone
-            })
-        );
-    } catch (e) {
-        setTimeout(() => {
-            hideLoader();
-            showError();
-        }, 3000);
-    }
-}
 
 const compareAge = (userOne, userTwo) => {
     return userOne.age - userTwo.age
