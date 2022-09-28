@@ -187,8 +187,10 @@ function resetOnClick() {
     toggleFilterPanel();
 }
 
+
+
 const searchByName = ({ target: { value } }) => {
-    const normalizedValue = value.trim().toLowerCase();
+    const normalizedValue = value.replaceAll(' ','').trim().toLowerCase();
 
     const userCards = document.querySelectorAll('.user-card__name');
 
@@ -203,7 +205,7 @@ const searchByName = ({ target: { value } }) => {
             .pop()
             .toLowerCase();
 
-        const isVisible = firstName.includes(normalizedValue) || lastName.includes(normalizedValue);
+        const isVisible = (firstName + lastName).includes(normalizedValue);
 
         userCard.parentElement.parentElement.classList.toggle('none', !isVisible);
     });
