@@ -188,26 +188,17 @@ function resetOnClick() {
 }
 
 
-
 const searchByName = ({ target: { value } }) => {
-    const normalizedValue = value.replaceAll(' ','').trim().toLowerCase();
+    const normalizedValue = value.trim().toLowerCase();
 
-    const userCards = document.querySelectorAll('.user-card__name');
+    const userCardsNames = document.querySelectorAll('.user-card__name');
 
-    userCards.forEach((userCard) => {
-        const firstName = userCard.innerText
-            .split(' ')
-            .shift()
-            .toLowerCase();
+    userCardsNames.forEach((userCardName) => {
+        const fullName = userCardName.innerText.toLowerCase();
 
-        const lastName = userCard.innerText
-            .split(' ')
-            .pop()
-            .toLowerCase();
+        const isVisible = fullName.includes(normalizedValue);
 
-        const isVisible = (firstName + lastName).includes(normalizedValue);
-
-        userCard.parentElement.parentElement.classList.toggle('none', !isVisible);
+        userCardName.parentElement.parentElement.classList.toggle('none', !isVisible);
     });
 };
 
