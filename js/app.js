@@ -23,6 +23,7 @@ const asidePanelOptions = {
 };
 
 const initialUsers = [];
+const sortedUsers = [];
 
 const normalizeUserObject = (user) => ({
     fullName: user.name.first + ' ' + user.name.last,
@@ -194,11 +195,13 @@ const searchByName = ({ target: { value } }) => {
     const userCardsNames = document.querySelectorAll('.user-card__name');
 
     userCardsNames.forEach((userCardName) => {
-        const fullName = userCardName.innerText.toLowerCase();
+        const userFullName = userCardName.innerText.toLowerCase();
 
-        const isVisible = fullName.includes(normalizedValue);
+        const isVisible = userFullName.includes(normalizedValue);
 
-        userCardName.parentElement.parentElement.classList.toggle('none', !isVisible);
+        const userCard = userCardName.closest('.user-card');
+
+        userCard.classList.toggle('none', !isVisible);
     });
 };
 
