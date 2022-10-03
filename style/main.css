@@ -82,6 +82,7 @@ body {
     background-color: var(--light-cobalt);
     padding: 0.5rem;
     border-radius: 1rem;
+    user-select: none;
 }
 
 .aside__item {
