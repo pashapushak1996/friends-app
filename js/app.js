@@ -151,7 +151,7 @@ const filterByGender = (users) => {
 
 const filterByAge = (users) => {
     const minAge = minAgeInput.value || 0;
-    const maxAge = maxAgeInput.value || 200;
+    const maxAge = maxAgeInput.value || 100;
 
     return users.filter((user) => user.age >= Number(minAge) && user.age <= Number(maxAge));
 }
@@ -260,9 +260,16 @@ searchButton.addEventListener('click', () => {
 
 headerButton.addEventListener('click', toggleFilterPanel);
 
-const ALLOWED_CHARS_REGEXP = /[0-9/def]+/;
+const ALLOWED_CHARS_REGEXP = new RegExp('\\d|\\.');
 
 const checkAllowedCharacters = (event) => {
+    if (event.ctrlKey
+        || event.altKey
+        || typeof event.key !== 'string'
+        || event.key.length !== 1) {
+        return;
+    }
+
     if (!ALLOWED_CHARS_REGEXP.test(event.key)) {
         event.preventDefault();
     }
